@@ -1,0 +1,24 @@
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    border: 2px solid black;
+}
+.circle {
+    color: blue;
+    font-weight: bold;
+}
+.cross {
+    color: red;
+    font-weight: bold;
+}
