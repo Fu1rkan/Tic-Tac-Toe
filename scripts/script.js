@@ -5,6 +5,7 @@ let fields = [
 ];
 
 let currentPlayer = 'circle';
+let gameOver = false;
 
 function render() {
     let html = '<table id="gameBoard">';
@@ -27,21 +28,25 @@ function render() {
     }
     html += '</table>';
     document.getElementById('content').innerHTML = html;
+    updatePlayerIndicator();
 }
 
 function handleClick(index, element) {
-    if (fields[index] !== null) return;
+    if (fields[index] !== null || gameOver) return;
     
     fields[index] = currentPlayer;
     element.innerHTML = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG();
     element.onclick = null;
     
-    if (checkWin()) {
-        drawWinningLine();
+    const winningCombination = checkWin();
+    if (winningCombination) {
+        gameOver = true;
+        drawWinningLine(winningCombination);
         return;
     }
     
     currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';
+    updatePlayerIndicator();
 }
 
 function checkWin() {
@@ -60,12 +65,8 @@ function checkWin() {
     return null;
 }
 
-function drawWinningLine() {
-    const winningCombination = checkWin();
-    if (!winningCombination) return;
-    
+function drawWinningLine(winningCombination) {
     const gameBoard = document.getElementById('gameBoard');
-    const tableRect = gameBoard.getBoundingClientRect();
     const firstCell = gameBoard.rows[Math.floor(winningCombination[0] / 3)].cells[winningCombination[0] % 3];
     const lastCell = gameBoard.rows[Math.floor(winningCombination[2] / 3)].cells[winningCombination[2] % 3];
     const firstRect = firstCell.getBoundingClientRect();
@@ -83,6 +84,11 @@ function drawWinningLine() {
     line.style.pointerEvents = 'none';
     
     document.body.appendChild(line);
+}
+
+function updatePlayerIndicator() {
+    document.getElementById('circle-indicator').style.opacity = currentPlayer === 'circle' ? '1' : '0.3';
+    document.getElementById('cross-indicator').style.opacity = currentPlayer === 'cross' ? '1' : '0.3';
 }
 
 function generateCircleSVG() {
@@ -109,8 +115,6 @@ function generateCrossSVG() {
     `;
 }
 
-render();
-
 function resetGame() {
     fields = [
         null, null, null,
@@ -118,6 +122,7 @@ function resetGame() {
         null, null, null
     ];
     currentPlayer = 'circle';
+    gameOver = false;
     document.querySelectorAll('div').forEach(div => {
         if (div.style.background === 'white') {
             div.remove();
@@ -125,3 +130,10 @@ function resetGame() {
     });
     render();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector("button").onclick = resetGame;
+    updatePlayerIndicator();
+});
+
+render();

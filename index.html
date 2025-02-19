@@ -11,6 +11,26 @@
         <h1>Tic Tac Toe</h1>
     </header>
     <div class="main_container">
+        <div class="player_section">
+            <div id="circle-indicator" class="player_indicator">
+                <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="show_player">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#00B0EF" stroke-width="8"
+                            stroke-dasharray="251.2" stroke-dashoffset="251.2">
+                        <animate attributeName="stroke-dashoffset" from="251.2" to="0" dur="1ms" fill="freeze"/>
+                    </circle>
+                </svg>
+            </div>
+            <div id="cross-indicator" class="player_indicator">
+                <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="show_player_x">
+                    <line x1="20" y1="20" x2="80" y2="80" stroke="red" stroke-width="8" stroke-dasharray="84.85" stroke-dashoffset="84.85">
+                        <animate attributeName="stroke-dashoffset" from="84.85" to="0" dur="1ms" fill="freeze"/>
+                    </line>
+                    <line x1="80" y1="20" x2="20" y2="80" stroke="red" stroke-width="8" stroke-dasharray="84.85" stroke-dashoffset="84.85">
+                        <animate attributeName="stroke-dashoffset" from="84.85" to="0" dur="1ms" fill="freeze"/>
+                    </line>
+                </svg>
+            </div>
+        </div>
         <div id="content"></div>
         <button onclick="resetGame()">Spiel neu starten</button>
     </div>
